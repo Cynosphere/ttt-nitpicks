@@ -1,0 +1,7 @@
+{
+  "title": "TTT(2) Nitpicks",
+  "description": "Various fixes for TTT(2) for things I personally find annoying.",
+  "ignore": [".git*", "README.md", "LICENSE"],
+  "tags": ["fun", "realism"],
+  "type": "tool"
+}
