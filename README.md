@@ -19,6 +19,11 @@ Fix subjectively broken logic where all roles can see credits on a body in the d
 
 It might just completely remove the credits field from the death screen despite checking if your role can take the credits, but whatever, doesn't matter.
 
+## PrintMessage Non-Blocking [TTT2 Only] (`ttt_nitpicks_printmessage_nonblocking`)
+
+Fixes PrintMessage calls being set to blocking and filling up the popup queue.
+Useful when using tools like Navmesh Optimizer.
+
 # Planned
 
 - Magneto-Stick c_model
