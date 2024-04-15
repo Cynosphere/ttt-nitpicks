@@ -28,4 +28,11 @@ function CLGAMEMODESUBMENU:Populate(parent)
   form:MakeHelp({
     label = "help_ttt_nitpicks_no_see_credits",
   })
+  form:MakeCheckBox({
+    label = "label_ttt_nitpicks_printmessage_nonblocking",
+    serverConvar = "ttt_nitpicks_printmessage_nonblocking",
+  })
+  form:MakeHelp({
+    label = "help_ttt_nitpicks_printmessage_nonblocking",
+  })
 end

@@ -26,6 +26,7 @@ end
 local TTT_NITPICKS_HOLSTERED_VIEWMODEL = CreateCvar("ttt_nitpicks_holstered_viewmodel", "Changes the holstered viewmodel to normal hands for compatibility with viewmodel addons such as VManip.")
 local TTT_NITPICKS_MAGNETO_BINDS = CreateCvar("ttt_nitpicks_magneto_binds", "[TTT2 Only] Unflips Magneto-Stick binds to how they are in stock TTT.")
 local TTT_NITPICKS_NO_SEE_CREDITS = CreateCvar("ttt_nitpicks_no_see_credits", "[TTT2 Only] Fix subjectively broken logic where all roles can see credits on a body in the death screen.")
+local TTT_NITPICKS_PRINTMESSAGE_NONBLOCKING = CreateCvar("ttt_nitpicks_printmessage_nonblocking", "[TTT2 Only] Fixes PrintMessage calls being set to blocking and filling up the popup queue. Useful when using tools like Navmesh Optimizer.")
 -- }}}
 
 -- {{{ backup logic
@@ -170,6 +171,25 @@ local modifications = {
 				RestoreBackupWeapon(SWEP, "SecondaryAttack")
 				RestoreBackupWeapon(SWEP, "RefreshTTT2HUDHelp")
 			end
+		end
+	end,
+	ttt2_printmessage_nonblocking = function()
+		if TTT_NITPICKS_PRINTMESSAGE_NONBLOCKING:GetBool() then
+			DbgMsg(1, "Applying TTT2 PrintMessage Non-Blocking")
+			BackupAndSetFunction("EPOP", EPOP, "AddMessage", function(orig)
+				return function(self, title, subtitle, displayTime, iconTable, blocking)
+					local info = debug.getinfo(2, "S")
+					if info.short_src == "gamemodes/terrortown/gamemode/shared/sh_printmessage_override.lua" then
+						blocking = false
+					end
+
+					return orig(self, title, subtitle, displayTime, iconTable, blocking)
+				end
+			end)
+		else
+			DbgMsg(1, "Restoring TTT2 PrintMessage Non-Blocking")
+
+			RestoreBackup("EPOP", EPOP, "AddMessage")
 		end
 	end,
 }
